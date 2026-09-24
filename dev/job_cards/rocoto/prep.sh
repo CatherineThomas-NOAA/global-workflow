@@ -8,6 +8,10 @@ if [[ ${status} -ne 0 ]]; then
     err_exit "${status}"
 fi
 
+module unload netcdf-D
+module load netcdf/4.7.4 2>/dev/null || module load netcdf
+
+
 ###############################################################
 export job="prep"
 export jobid="${job}.$$"
@@ -111,7 +115,9 @@ if [[ ${PROCESS_TROPCY} == "YES" ]]; then
     fi
 
 else
-    cpfs "${COMINobsproc}/${RUN_local}.t${cyc}z.syndata.tcvitals.tm00" "${COMOUT_OBS}/"
+    #Change not needed if pointing to v1.3 obs in GDA
+    cpfs "/lfs/h2/emc/dump/noscrub/dump/${RUN_local}.${PDY}/${cyc}/atmos/${RUN_local}.t${cyc}z.syndata.tcvitals.tm00" "${COMOUT_OBS}/"
+    #cpfs "${COMINobsproc}/${RUN_local}.t${cyc}z.syndata.tcvitals.tm00" "${COMOUT_OBS}/"
 fi
 
 ###############################################################
@@ -140,8 +146,8 @@ rm -f "${COMOUT_OBS}/${OPREFIX}prepbufr"
 rm -f "${COMOUT_OBS}/${OPREFIX}prepbufr.acft_profiles"
 rm -f "${COMOUT_OBS}/${OPREFIX}nsstbufr"
 
-declare -rx COMIN_ATMOS_HISTORY_GDAS="${ROTDIR}/gdas.${PDY}/${cyc}/model/atmos/history"
-declare -rx COMIN_ATMOS_HISTORY_GFS="${ROTDIR}/gfs.${PDY}/${cyc}/model/atmos/history"
+declare -rx COMIN_ATMOS_HISTORY_GDAS="${ROTDIR}/gdas.${PDY}/${cyc}"
+declare -rx COMIN_ATMOS_HISTORY_GFS="${ROTDIR}/gfs.${PDY}/${cyc}"
 
 export job="j${RUN_local}_prep_${cyc}"
 
