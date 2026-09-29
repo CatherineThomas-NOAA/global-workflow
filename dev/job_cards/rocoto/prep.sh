@@ -8,7 +8,6 @@ if [[ ${status} -ne 0 ]]; then
     err_exit "${status}"
 fi
 
-
 ###############################################################
 export job="prep"
 export jobid="${job}.$$"
