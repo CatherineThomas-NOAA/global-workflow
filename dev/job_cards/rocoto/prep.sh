@@ -8,9 +8,6 @@ if [[ ${status} -ne 0 ]]; then
     err_exit "${status}"
 fi
 
-module unload netcdf-D
-module load netcdf/4.7.4 2>/dev/null || module load netcdf
-
 
 ###############################################################
 export job="prep"
